@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build / release artefacts (regenerate with `npm run dist`)
+build/
+release/
+
+# Live ledger + local backups (regenerate with `npm run seed -- --fresh`)
+data/*.db
+data/*.db-shm
+data/*.db-wal
+data/backups/
+
+# Logs / OS noise
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Editor state
+.vscode/
+.idea/

@@ -1,0 +1,89 @@
+{
+  "name": "apex-erp-ledger-engine",
+  "productName": "Apex ERP",
+  "version": "3.0.0",
+  "description": "Autonomous Enterprise Chart of Accounts & General Ledger ERP Engine (SRS v3.0.0)",
+  "main": "main.js",
+  "author": "Apex Engineering",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "seed": "node scripts/seedDemoData.js",
+    "verify": "node scripts/verifyCaseStudy.js",
+    "test": "node --test",
+    "smoke": "electron scripts/smokeShell.js",
+    "shots": "electron scripts/shootScreens.js",
+    "build:icon": "node scripts/makeIcon.js",
+    "build:db": "node scripts/buildAppDb.js",
+    "dist:dir": "npm run build:icon && npm run build:db && electron-builder --win dir",
+    "dist": "npm run build:icon && npm run build:db && electron-builder --win",
+    "check:install": "node scripts/checkInstalledLedger.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.11.1",
+    "jspdf": "^2.5.2",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron": "^35.1.5",
+    "electron-builder": "^26.0.12"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "core-js@3.50.0": true,
+    "electron@35.7.5": true,
+    "electron-winstaller@5.4.0": true
+  },
+  "build": {
+    "appId": "com.apex.erp.ledger",
+    "productName": "Apex ERP",
+    "copyright": "Copyright © 2026 Apex Engineering",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "**/*",
+      "!scripts/**",
+      "!tests/**",
+      "!docs/**",
+      "!build/**",
+      "!release/**",
+      "!data/**",
+      "!node_modules/electron/**",
+      "!node_modules/better-sqlite3/**",
+      "!**/*.map",
+      "!**/node_modules/**/{test,tests,benchmark,coverage,example,examples}/**"
+    ],
+    "extraResources": [
+      {
+        "from": "build/apex_erp.db",
+        "to": "seed/apex_erp.db"
+      }
+    ],
+    "asar": true,
+    "npmRebuild": false,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Apex ERP",
+      "uninstallDisplayName": "Apex ERP ${version}",
+      "artifactName": "ApexERP-Setup-${version}.${ext}",
+      "installerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}
